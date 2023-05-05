@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
   <head>
@@ -11,5 +12,6 @@
       {% block content %} {% endblock content %}
     </main>
     {% include 'recipes/partials/footer.html'%}
+    <script src="{% static 'recipes/js/script.js' %}"> </script>
   </body>
 </html>
