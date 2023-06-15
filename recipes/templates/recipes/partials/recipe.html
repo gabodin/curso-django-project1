@@ -1,32 +1,31 @@
 <div class="recipe recipe-list-item">
+  {% if recipe.cover %}
   <div class="recipe-cover">
     <a href="{% url 'recipes:recipe' recipe.id %}">
-
-      <img src="{{recipe.cover.url}}" alt="Temporário" 
-           class="food-picture"
-      />
+      <img src="{{recipe.cover.url}}" alt="Temporário" class="food-picture" />
     </a>
   </div>
+  {% endif %}
   <div class="recipe-content">
     <div class="recipe-title-container">
       <h2 class="recipe-title">
-        <a href="{% url 'recipes:recipe' recipe.id %}">
-          {{recipe.title}}
-        </a>
+        <a href="{% url 'recipes:recipe' recipe.id %}"> {{recipe.title}} </a>
       </h2>
     </div>
     <div class="recipe-author">
       <span class="recipe-author-item">
         <i class="fas fa-user"></i>
-        {{recipe.author.first_name}} {{recipe.author.last_name}}
+        {% if recipe.author.first_name and recipe.author.last_name %}
+        {{recipe.author.first_name}} {{recipe.author.last_name}} {% else %}
+        {{recipe.author.username }} {% endif %}
       </span>
       <span class="recipe-author-item">
         <i class="fas fa-calendar-alt"></i>
-        {{recipe.created_at|date:"d/m/Y"}} 
+        {{recipe.created_at|date:"d/m/Y"}}
         <!-- às {{recipe.created_at|date:"H:i"}} -->
       </span>
       <span class="recipe-author-item">
-        <a href="/recipes/category/cafe-da-manha/">
+        <a href="{% url 'recipes:category' recipe.category.id %}">
           <i class="fas fa-layer-group"></i>
           <span>{{recipe.category.name}}</span>
         </a>
@@ -42,7 +41,8 @@
       </div>
       <div class="recipe-extra recipe-content-servings">
         <p>
-          <i class="fa-solid fa-pizza-slice"></i> <strong> {{recipe.servings_unit}} </strong>
+          <i class="fa-solid fa-pizza-slice"></i>
+          <strong> {{recipe.servings_time_unit}} </strong>
         </p>
         <p>{{recipe.servings}} porções</p>
       </div>
@@ -55,10 +55,9 @@
       <p>ver mais...</p>
     </a>
   </div>
-  {% endif %}
-  {% if is_detail_page %}
-    <div class="preparation-steps">
-      <p>{{recipe.preparation_steps|linebreaksbr}}</p>
-    </div>
+  {% endif %} {% if is_detail_page %}
+  <div class="preparation-steps">
+    <p>{{recipe.preparation_steps|linebreaksbr}}</p>
+  </div>
   {% endif %}
 </div>
